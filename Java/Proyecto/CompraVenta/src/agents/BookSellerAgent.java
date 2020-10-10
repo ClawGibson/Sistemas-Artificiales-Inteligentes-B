@@ -21,6 +21,7 @@ public class BookSellerAgent extends Agent {
     private Hashtable catalogue;
     private BookSellerGui gui;
     private NuevoVendedor nv;
+    Inicio in = new Inicio();
     private AID name;
 
     public void setName(String nombre) {
@@ -68,17 +69,16 @@ public class BookSellerAgent extends Agent {
         }
 
         gui.dispose();
-
-        System.out.println("Agente vendedor[" + getLocalName() + "] finalizado");
+        in.resultados.setText("Agente vendedor[" + getLocalName() + "] finalizado");
+        //System.out.println("Agente vendedor[" + getLocalName() + "] finalizado");
     }
 
     public void updateCatalogue(final String title, final int price) {
         addBehaviour(new OneShotBehaviour() {
             public void action() {
                 catalogue.put(title, price);
-                Inicio in = new Inicio();
-                in.consultarCatalogo(catalogue);
-                System.out.println("Libro: [" + title + "] insertado con el precio de:  $" + price);
+                in.libros.setText("Libro: [" + title + "] insertado con el precio de:  $" + price);
+                //System.out.println("Libro: [" + title + "] insertado con el precio de:  $" + price);
             }
         });
     }

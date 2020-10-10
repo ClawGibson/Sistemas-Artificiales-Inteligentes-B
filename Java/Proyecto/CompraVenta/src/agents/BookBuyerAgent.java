@@ -1,5 +1,6 @@
 package agents;
 
+import GUI.Inicio;
 import jade.core.Agent;
 import behaviours.RequestPerformer;
 import jade.core.AID;
@@ -11,13 +12,15 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 
 public class BookBuyerAgent extends Agent {
 
+    Inicio in = new Inicio();
     private String bookTitle;
     private AID[] sellerAgents;
     private int ticker_timer = 10000;
     private BookBuyerAgent this_agent = this;
 
     protected void setup() {
-        System.out.println("Agente comprador [" + getLocalName() + "] listo");
+        in.resultados.setText("Agente comprador [" + getLocalName() + "] listo");
+        //System.out.println("Agente comprador [" + getLocalName() + "] listo");
 
         Object[] args = getArguments();
         if (args != null && args.length > 0) {
@@ -26,7 +29,8 @@ public class BookBuyerAgent extends Agent {
 
             addBehaviour(new TickerBehaviour(this, ticker_timer) {
                 protected void onTick() {
-                    System.out.println("Intentando comprar el libro: " + bookTitle);
+                    in.resultados.setText("Intentando comprar el libro: " + bookTitle);
+                    //System.out.println("Intentando comprar el libro: " + bookTitle);
 
                     DFAgentDescription template = new DFAgentDescription();
                     ServiceDescription sd = new ServiceDescription();
@@ -35,13 +39,17 @@ public class BookBuyerAgent extends Agent {
 
                     try {
                         DFAgentDescription[] result = DFService.search(myAgent, template);
-                        System.out.println("Se encontraron los siguientes agentes vendedores:");
+                        in.libros.setText("Se encontraron los siguientes agentes vendedores: ");
+                        String aux = in.libros.getText();
+                        String agentesVendedores = "";
+                        //System.out.println("Se encontraron los siguientes agentes vendedores:");
                         sellerAgents = new AID[result.length];
                         for (int i = 0; i < result.length; i++) {
                             sellerAgents[i] = result[i].getName();
-                            System.out.println("[" + sellerAgents[i].getLocalName() + "]");
+                            agentesVendedores = agentesVendedores + " | " + "[" + sellerAgents[i].getLocalName() + "]";
+                            //System.out.println("[" + sellerAgents[i].getLocalName() + "]");
                         }
-
+                        in.libros.setText(aux + "\n" + agentesVendedores);
                     } catch (FIPAException fe) {
                         fe.printStackTrace();
                     }
@@ -56,7 +64,8 @@ public class BookBuyerAgent extends Agent {
     }
 
     protected void takeDown() {
-        System.out.println("Agente comprador [" + getLocalName() + "] finalizado");
+        in.resultados.setText("Agente comprador [" + getLocalName() + "] finalizado");
+        //System.out.println("Agente comprador [" + getLocalName() + "] finalizado");
     }
 
     public AID[] getSellerAgents() {

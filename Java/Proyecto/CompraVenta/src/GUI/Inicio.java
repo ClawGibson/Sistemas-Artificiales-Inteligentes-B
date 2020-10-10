@@ -5,19 +5,11 @@
  */
 package GUI;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-
 /**
  *
  * @author Gamaliel Bernal
  */
 public class Inicio extends javax.swing.JFrame {
-
-    DefaultTableCellRenderer alinearCentro;
 
     public Inicio() {
         initComponents();
@@ -144,34 +136,12 @@ public class Inicio extends javax.swing.JFrame {
         });
     }
 
-    public void consultarCatalogo(Hashtable ht) {
-        alinearCentro = new DefaultTableCellRenderer();
-        alinearCentro.setHorizontalAlignment(SwingConstants.CENTER);
-        try {
-            DefaultTableModel dtm = new DefaultTableModel();
-            dtm.addColumn("Vendedor");
-            dtm.addColumn("Libro");
-            tabla.setModel(dtm);
-            Enumeration e = ht.keys();
-            while (e.hasMoreElements()) {
-                Object vector[] = new Object[2];
-                for (int i = 0; i < vector.length; i++) {
-                    vector[i] = e.nextElement();
-                    tabla.getColumnModel().getColumn(i).setCellRenderer(alinearCentro);
-                }
-                dtm.addRow(vector);
-            }
-        } catch (Exception ex) {
-            ex.getMessage();
-        }
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField libros;
+    public javax.swing.JTextField libros;
     private javax.swing.JButton nuevoComprador;
     private javax.swing.JButton nuevoVendedor;
-    private javax.swing.JTextField resultados;
+    public javax.swing.JTextField resultados;
     // End of variables declaration//GEN-END:variables
 }

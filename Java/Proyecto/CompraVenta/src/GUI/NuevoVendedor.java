@@ -22,16 +22,19 @@ public class NuevoVendedor extends javax.swing.JFrame {
      */
     private BookSellerAgent myAgent;
 
-    public NuevoVendedor(BookSellerAgent a) {
+    public NuevoVendedor() {
         initComponents();
         setLocationRelativeTo(null);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 myAgent.doDelete();
             }
         });
+    }
+
+    public NuevoVendedor(BookSellerAgent a) {
+        
     }
 
     /**
