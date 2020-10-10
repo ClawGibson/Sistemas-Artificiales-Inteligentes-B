@@ -20,7 +20,8 @@ public class BookBuyerAgent extends Agent {
     private BookBuyerAgent this_agent = this;
 
     public void setNombre(String name) {
-        this_agent.getAID().setName(name);
+        this_agent.getAMS().setLocalName(name);
+        //this_agent.getAID().setName(name);
     }
 
     protected void setup() {

@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import agents.BookBuyerAgent;
+
 /**
  *
  * @author Gamaliel Bernal
@@ -37,6 +39,11 @@ public class Inicio extends javax.swing.JFrame {
         resultados.setText("Resultados");
 
         nuevoComprador.setText("Nuevo Comprador");
+        nuevoComprador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoCompradorActionPerformed(evt);
+            }
+        });
 
         nuevoVendedor.setText("Nuevo Vendedor");
         nuevoVendedor.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +107,12 @@ public class Inicio extends javax.swing.JFrame {
         NombreVendedor nv = new NombreVendedor();
         nv.setVisible(true);
     }//GEN-LAST:event_nuevoVendedorActionPerformed
+
+    private void nuevoCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoCompradorActionPerformed
+        BookBuyerAgent bba = new BookBuyerAgent();
+        NuevoComprador nc = new NuevoComprador();
+        nc.setVisible(true);
+    }//GEN-LAST:event_nuevoCompradorActionPerformed
 
     /**
      * @param args the command line arguments

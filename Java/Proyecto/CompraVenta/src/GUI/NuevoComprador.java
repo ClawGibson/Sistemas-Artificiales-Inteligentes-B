@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import agents.BookBuyerAgent;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,9 +17,12 @@ public class NuevoComprador extends javax.swing.JFrame {
     /**
      * Creates new form NuevoComprador
      */
+    BookBuyerAgent bba = new BookBuyerAgent();
+
     public NuevoComprador() {
         initComponents();
         setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -96,6 +100,7 @@ public class NuevoComprador extends javax.swing.JFrame {
         String name = nombreComprador.getText().trim();
         String libro = nombreLibro.getText().trim();
         if (!"".equals(name) && !"".equals(libro)) {
+            bba.setNombre(name);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Debe llenar los campos.", "Llenado de campos", JOptionPane.WARNING_MESSAGE);
