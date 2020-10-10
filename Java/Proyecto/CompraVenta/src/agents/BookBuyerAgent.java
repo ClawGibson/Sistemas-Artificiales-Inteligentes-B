@@ -9,6 +9,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import javax.swing.JOptionPane;
 
 public class BookBuyerAgent extends Agent {
 
@@ -18,6 +19,10 @@ public class BookBuyerAgent extends Agent {
     private int ticker_timer = 10000;
     private BookBuyerAgent this_agent = this;
 
+    public void setNombre(String name) {
+        this_agent.getAID().setName(name);
+    }
+
     protected void setup() {
         in.resultados.setText("Agente comprador [" + getLocalName() + "] listo");
         //System.out.println("Agente comprador [" + getLocalName() + "] listo");
@@ -25,7 +30,8 @@ public class BookBuyerAgent extends Agent {
         Object[] args = getArguments();
         if (args != null && args.length > 0) {
             bookTitle = (String) args[0];
-            System.out.println("Libro: " + bookTitle);
+            in.libros.setText("Libro: " + bookTitle);
+            //System.out.println("Libro: " + bookTitle);
 
             addBehaviour(new TickerBehaviour(this, ticker_timer) {
                 protected void onTick() {
@@ -58,7 +64,8 @@ public class BookBuyerAgent extends Agent {
                 }
             });
         } else {
-            System.out.println("No se especificó un libro.");
+            JOptionPane.showMessageDialog(in, "No se especificó un libro", "Advertencia", JOptionPane.ERROR_MESSAGE);
+            //System.out.println("No se especificó un libro.");
             doDelete();
         }
     }

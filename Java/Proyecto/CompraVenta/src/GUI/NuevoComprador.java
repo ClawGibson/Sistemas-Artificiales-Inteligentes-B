@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Gamaliel Bernal
@@ -16,6 +18,7 @@ public class NuevoComprador extends javax.swing.JFrame {
      */
     public NuevoComprador() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -90,7 +93,13 @@ public class NuevoComprador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-        this.dispose();
+        String name = nombreComprador.getText().trim();
+        String libro = nombreLibro.getText().trim();
+        if (!"".equals(name) && !"".equals(libro)) {
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe llenar los campos.", "Llenado de campos", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_addActionPerformed
 
     /**

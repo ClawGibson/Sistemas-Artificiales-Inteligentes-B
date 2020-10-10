@@ -1,5 +1,6 @@
 package behaviours;
 
+import GUI.Inicio;
 import agents.BookBuyerAgent;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
@@ -15,6 +16,7 @@ public class RequestPerformer extends Behaviour {
     private int step = 0;
     private BookBuyerAgent bbAgent;
     private String bookTitle;
+    Inicio in = new Inicio();
 
     public RequestPerformer(BookBuyerAgent a) {
         bbAgent = a;
@@ -77,13 +79,14 @@ public class RequestPerformer extends Behaviour {
                 reply = myAgent.receive(mt);
                 if (reply != null) {
                     if (reply.getPerformative() == ACLMessage.INFORM) {
-                        System.out.println("El libro: " + bookTitle + " ha sido comprado con éxito al agente: [" + reply.getSender().getLocalName() + "]");
-                        System.out.println("Precio = " + bestPrice);
+                        in.resultados.setText("El libro: " + bookTitle + " ha sido comprado con éxito al agente: [" + reply.getSender().getLocalName() + "]" + "\n" + "Precio = " + bestPrice);
+                        //System.out.println("El libro: " + bookTitle + " ha sido comprado con éxito al agente: [" + reply.getSender().getLocalName() + "]");
+                        //System.out.println("Precio = " + bestPrice);
                         myAgent.doDelete();
                     } else {
-                        System.out.println("Intento fallido: El libro solicitado ya ha sido vendido.");
+                        in.resultados.setText("Intento fallido: El libro solicitado ya ha sido vendido.");
+                        //System.out.println("Intento fallido: El libro solicitado ya ha sido vendido.");
                     }
-
                     step = 4;
                 } else {
                     block();
@@ -94,7 +97,8 @@ public class RequestPerformer extends Behaviour {
 
     public boolean done() {
         if (step == 2 && bestSeller == null) {
-            System.out.println("Intento fallido: " + " El libro [" + bookTitle + "] no está disponible para venta.");
+            in.resultados.setText("Intento fallido: " + " El libro [" + bookTitle + "] no está disponible para venta.");
+            //System.out.println("Intento fallido: " + " El libro [" + bookTitle + "] no está disponible para venta.");
         }
         return ((step == 2 && bestSeller == null) || step == 4);
     }
