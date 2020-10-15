@@ -5,8 +5,6 @@
  */
 package GUI;
 
-import agents.BookBuyerAgent;
-
 /**
  *
  * @author Gamaliel Bernal
@@ -16,6 +14,17 @@ public class Inicio extends javax.swing.JFrame {
     public Inicio() {
         initComponents();
         setLocationRelativeTo(null);
+        setResizable(false);
+        setTitle("Compra de libros");
+    }
+    
+
+    public void mensajesLibros(String mensajeLibros) {
+        libros.setText(libros.getText() + "\n" + mensajeLibros);
+    }
+
+    public void mensajesResultados(String mensajeResultados) {
+        resultados.setText(resultados.getText() + "\n" + mensajeResultados);
     }
 
     /**
@@ -27,92 +36,53 @@ public class Inicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        resultados = new javax.swing.JTextField();
-        nuevoComprador = new javax.swing.JButton();
-        nuevoVendedor = new javax.swing.JButton();
-        libros = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        libros = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        resultados = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        resultados.setText("Resultados");
+        libros.setColumns(20);
+        libros.setRows(5);
+        jScrollPane1.setViewportView(libros);
 
-        nuevoComprador.setText("Nuevo Comprador");
-        nuevoComprador.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nuevoCompradorActionPerformed(evt);
-            }
-        });
-
-        nuevoVendedor.setText("Nuevo Vendedor");
-        nuevoVendedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nuevoVendedorActionPerformed(evt);
-            }
-        });
-
-        libros.setEditable(false);
-        libros.setText("Libros disponibles");
+        resultados.setColumns(20);
+        resultados.setRows(5);
+        jScrollPane2.setViewportView(resultados);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(resultados, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSeparator1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(nuevoComprador)
-                        .addGap(74, 74, 74)
-                        .addComponent(nuevoVendedor)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jSeparator2)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(libros, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nuevoComprador)
-                    .addComponent(nuevoVendedor))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(libros, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(resultados, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void nuevoVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoVendedorActionPerformed
-        NombreVendedor nv = new NombreVendedor();
-        nv.setVisible(true);
-    }//GEN-LAST:event_nuevoVendedorActionPerformed
-
-    private void nuevoCompradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoCompradorActionPerformed
-        BookBuyerAgent bba = new BookBuyerAgent();
-        NuevoComprador nc = new NuevoComprador();
-        nc.setVisible(true);
-    }//GEN-LAST:event_nuevoCompradorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,11 +120,10 @@ public class Inicio extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator2;
-    public javax.swing.JTextField libros;
-    private javax.swing.JButton nuevoComprador;
-    private javax.swing.JButton nuevoVendedor;
-    public javax.swing.JTextField resultados;
+    public javax.swing.JTextArea libros;
+    public javax.swing.JTextArea resultados;
     // End of variables declaration//GEN-END:variables
 }

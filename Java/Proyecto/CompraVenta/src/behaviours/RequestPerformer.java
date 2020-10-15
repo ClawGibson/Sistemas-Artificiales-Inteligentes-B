@@ -6,6 +6,7 @@ import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import javax.swing.JOptionPane;
 
 public class RequestPerformer extends Behaviour {
 
@@ -16,11 +17,12 @@ public class RequestPerformer extends Behaviour {
     private int step = 0;
     private BookBuyerAgent bbAgent;
     private String bookTitle;
-    Inicio in = new Inicio();
+    Inicio in;
 
-    public RequestPerformer(BookBuyerAgent a) {
+    public RequestPerformer(BookBuyerAgent a, Inicio in) {
         bbAgent = a;
         bookTitle = a.getBookTitle();
+        this.in = in;
     }
 
     public void action() {
@@ -79,13 +81,10 @@ public class RequestPerformer extends Behaviour {
                 reply = myAgent.receive(mt);
                 if (reply != null) {
                     if (reply.getPerformative() == ACLMessage.INFORM) {
-                        in.resultados.setText("El libro: " + bookTitle + " ha sido comprado con éxito al agente: [" + reply.getSender().getLocalName() + "]" + "\n" + "Precio = " + bestPrice);
-                        //System.out.println("El libro: " + bookTitle + " ha sido comprado con éxito al agente: [" + reply.getSender().getLocalName() + "]");
-                        //System.out.println("Precio = " + bestPrice);
+                        in.mensajesResultados("El libro: [" + bookTitle + "] ha sido comprado con éxito al agente: [" + reply.getSender().getLocalName() + "]" + "\n" + "Precio = " + bestPrice);
                         myAgent.doDelete();
                     } else {
-                        in.resultados.setText("Intento fallido: El libro solicitado ya ha sido vendido.");
-                        //System.out.println("Intento fallido: El libro solicitado ya ha sido vendido.");
+                        in.mensajesResultados("Intento fallido: " + "\n" + "El libro solicitado ya ha sido vendido.");
                     }
                     step = 4;
                 } else {
@@ -97,8 +96,7 @@ public class RequestPerformer extends Behaviour {
 
     public boolean done() {
         if (step == 2 && bestSeller == null) {
-            in.resultados.setText("Intento fallido: " + " El libro [" + bookTitle + "] no está disponible para venta.");
-            //System.out.println("Intento fallido: " + " El libro [" + bookTitle + "] no está disponible para venta.");
+            in.mensajesResultados("Intento fallido: " + " El libro [" + bookTitle + "] no está disponible para venta.");
         }
         return ((step == 2 && bestSeller == null) || step == 4);
     }

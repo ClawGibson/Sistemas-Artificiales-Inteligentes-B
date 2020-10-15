@@ -1,5 +1,6 @@
 package gui;
 
+import GUI.Inicio;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -22,32 +23,28 @@ import jade.core.AID;
 public class BookSellerGui extends JFrame {
 
     private BookSellerAgent myAgent;
-
     private JTextField titleField, priceField;
 
-    public BookSellerGui(BookSellerAgent a) {
+    public BookSellerGui(BookSellerAgent a, Inicio in) {
         super(a.getLocalName());
         myAgent = a;
-    }
-
-    public BookSellerGui() {
         JPanel p = new JPanel();
         p.setLayout(new GridLayout(2, 2));
-        p.add(new JLabel("Book title:"));
+        p.add(new JLabel("Título del libro:"));
         titleField = new JTextField(15);
         p.add(titleField);
-        p.add(new JLabel("Price:"));
+        p.add(new JLabel("Precio:"));
         priceField = new JTextField(15);
         p.add(priceField);
         getContentPane().add(p, BorderLayout.CENTER);
 
-        JButton addButton = new JButton("Add");
+        JButton addButton = new JButton("Agregar");
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 try {
                     String title = titleField.getText().trim();
                     String price = priceField.getText().trim();
-
+                    JOptionPane.showConfirmDialog(null, "\"Libro [\" + title + \"] insertado con el precio $\" + price");
                     myAgent.updateCatalogue(title, Integer.parseInt(price));
                     titleField.setText("");
                     priceField.setText("");

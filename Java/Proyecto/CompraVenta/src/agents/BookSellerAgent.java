@@ -1,13 +1,11 @@
 package agents;
 
 import GUI.Inicio;
-import GUI.NuevoVendedor;
 import java.util.Hashtable;
 
 import behaviours.OfferRequestServer;
 import behaviours.PurchaseOrderServer;
 import gui.BookSellerGui;
-import jade.core.AID;
 
 import jade.core.Agent;
 import jade.core.behaviours.*;
@@ -20,26 +18,16 @@ public class BookSellerAgent extends Agent {
 
     private Hashtable catalogue;
     private BookSellerGui gui;
-    private NuevoVendedor nv;
-    Inicio in = new Inicio();
-    private AID name;
+    Inicio in;
 
-    public void setName(String nombre) {
-        name = new AID(nombre);
-    }
-
-    public String getNameAgent() {
-        return name.getLocalName();
-    }
-
-    public AID getAgent() {
-        return name;
+    public void setInicio(Inicio in) {
+        this.in = in;
     }
 
     protected void setup() {
         catalogue = new Hashtable();
 
-        gui = new BookSellerGui(getAgent());
+        gui = new BookSellerGui(this, in);
         gui.showGui();
 
         DFAgentDescription dfd = new DFAgentDescription();
@@ -58,7 +46,7 @@ public class BookSellerAgent extends Agent {
 
         addBehaviour(new OfferRequestServer(this));
 
-        addBehaviour(new PurchaseOrderServer(this));
+        addBehaviour(new PurchaseOrderServer(this, in));
     }
 
     protected void takeDown() {
@@ -69,16 +57,17 @@ public class BookSellerAgent extends Agent {
         }
 
         gui.dispose();
-        in.resultados.setText("Agente vendedor[" + getLocalName() + "] finalizado");
-        //System.out.println("Agente vendedor[" + getLocalName() + "] finalizado");
+        String name = getLocalName();
+        in.mensajesResultados("Agente vendedor[" + name + "] finalizado");
     }
 
     public void updateCatalogue(final String title, final int price) {
         addBehaviour(new OneShotBehaviour() {
             public void action() {
                 catalogue.put(title, price);
-                in.libros.setText("Libro: [" + title + "] insertado con el precio de:  $" + price);
-                //System.out.println("Libro: [" + title + "] insertado con el precio de:  $" + price);
+                String titulo = title;
+                int precio = price;
+                in.mensajesLibros("Libro: [" + titulo + "] insertado con el precio de:  $" + precio);
             }
         });
     }

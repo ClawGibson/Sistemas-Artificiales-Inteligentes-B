@@ -5,14 +5,16 @@ import agents.BookSellerAgent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import javax.swing.JOptionPane;
 
 public class PurchaseOrderServer extends CyclicBehaviour {
 
     BookSellerAgent bsAgent;
-    Inicio in = new Inicio();
+    Inicio in;
 
-    public PurchaseOrderServer(BookSellerAgent a) {
+    public PurchaseOrderServer(BookSellerAgent a, Inicio in) {
         bsAgent = a;
+        this.in = in;
     }
 
     public void action() {
@@ -26,8 +28,8 @@ public class PurchaseOrderServer extends CyclicBehaviour {
             Integer price = (Integer) bsAgent.getCatalogue().remove(title);
             if (price != null) {
                 reply.setPerformative(ACLMessage.INFORM);
-                in.resultados.setText("Libro: " + title + " vendido al agente [" + msg.getSender().getLocalName() + "]");
-                //System.out.println("Libro: " + title + " vendido al agente [" + msg.getSender().getLocalName() + "]");
+                in.mensajesLibros("Libro: " + title + " vendido al agente [" + msg.getSender().getLocalName() + "]");
+                JOptionPane.showMessageDialog(null, "Libro: " + title + " vendido al agente [" + msg.getSender().getLocalName() + "]");
             } else {
                 reply.setPerformative(ACLMessage.FAILURE);
                 reply.setContent("No disponible");

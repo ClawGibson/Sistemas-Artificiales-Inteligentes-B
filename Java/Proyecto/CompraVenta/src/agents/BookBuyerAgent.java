@@ -19,25 +19,16 @@ public class BookBuyerAgent extends Agent {
     private int ticker_timer = 10000;
     private BookBuyerAgent this_agent = this;
 
-    public void setNombre(String name) {
-        this_agent.getAMS().setLocalName(name);
-        //this_agent.getAID().setName(name);
-    }
-
     protected void setup() {
-        in.resultados.setText("Agente comprador [" + getLocalName() + "] listo");
-        //System.out.println("Agente comprador [" + getLocalName() + "] listo");
-
+        in.setVisible(true);
+        in.mensajesResultados("Agente comprador [" + getLocalName() + "] listo");
         Object[] args = getArguments();
         if (args != null && args.length > 0) {
             bookTitle = (String) args[0];
-            in.libros.setText("Libro: " + bookTitle);
-            //System.out.println("Libro: " + bookTitle);
 
             addBehaviour(new TickerBehaviour(this, ticker_timer) {
                 protected void onTick() {
-                    in.resultados.setText("Intentando comprar el libro: " + bookTitle);
-                    //System.out.println("Intentando comprar el libro: " + bookTitle);
+                    in.mensajesResultados("Intentando comprar el libro: " + bookTitle);
 
                     DFAgentDescription template = new DFAgentDescription();
                     ServiceDescription sd = new ServiceDescription();
@@ -46,34 +37,36 @@ public class BookBuyerAgent extends Agent {
 
                     try {
                         DFAgentDescription[] result = DFService.search(myAgent, template);
-                        in.libros.setText("Se encontraron los siguientes agentes vendedores: ");
-                        String aux = in.libros.getText();
+                        String mensaje = "Se encontraron los siguientes agentes vendedores: ";
                         String agentesVendedores = "";
-                        //System.out.println("Se encontraron los siguientes agentes vendedores:");
                         sellerAgents = new AID[result.length];
                         for (int i = 0; i < result.length; i++) {
                             sellerAgents[i] = result[i].getName();
-                            agentesVendedores = agentesVendedores + " | " + "[" + sellerAgents[i].getLocalName() + "]";
-                            //System.out.println("[" + sellerAgents[i].getLocalName() + "]");
+                            agentesVendedores = agentesVendedores + "- " + "[" + sellerAgents[i].getLocalName() + "]";
                         }
-                        in.libros.setText(aux + "\n" + agentesVendedores);
+                        if (agentesVendedores.length() != 0) {
+                            in.mensajesLibros(mensaje + "\n" + agentesVendedores);
+                        } else {
+                            in.mensajesLibros("Aún no hay vendedores disponibles.");
+                        }
                     } catch (FIPAException fe) {
                         fe.printStackTrace();
                     }
 
-                    myAgent.addBehaviour(new RequestPerformer(this_agent));
+                    myAgent.addBehaviour(new RequestPerformer(this_agent, in));
                 }
             });
         } else {
             JOptionPane.showMessageDialog(in, "No se especificó un libro", "Advertencia", JOptionPane.ERROR_MESSAGE);
-            //System.out.println("No se especificó un libro.");
             doDelete();
         }
     }
 
+    @Override
     protected void takeDown() {
-        in.resultados.setText("Agente comprador [" + getLocalName() + "] finalizado");
-        //System.out.println("Agente comprador [" + getLocalName() + "] finalizado");
+        String name = getLocalName();
+        JOptionPane.showMessageDialog(in, "Agente comprador [" + name + "] finalizado");
+        in.mensajesResultados("Agente comprador [" + getLocalName() + "] finalizado");
     }
 
     public AID[] getSellerAgents() {
