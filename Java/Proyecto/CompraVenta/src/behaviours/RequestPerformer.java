@@ -81,10 +81,10 @@ public class RequestPerformer extends Behaviour {
                 reply = myAgent.receive(mt);
                 if (reply != null) {
                     if (reply.getPerformative() == ACLMessage.INFORM) {
-                        in.mensajesResultados("El libro: [" + bookTitle + "] ha sido comprado con éxito al agente: [" + reply.getSender().getLocalName() + "]" + "\n" + "Precio = " + bestPrice);
+                        JOptionPane.showMessageDialog(null, "El libro: [" + bookTitle + "] ha sido comprado con éxito al agente: [" + reply.getSender().getLocalName() + "]" + "\n" + "Precio = " + bestPrice);
                         myAgent.doDelete();
                     } else {
-                        in.mensajesResultados("Intento fallido: " + "\n" + "El libro solicitado ya ha sido vendido.");
+                        JOptionPane.showMessageDialog(null, "Intento fallido: " + "\n" + "El libro solicitado ya ha sido vendido.");
                     }
                     step = 4;
                 } else {
@@ -96,7 +96,7 @@ public class RequestPerformer extends Behaviour {
 
     public boolean done() {
         if (step == 2 && bestSeller == null) {
-            in.mensajesResultados("Intento fallido: " + " El libro [" + bookTitle + "] no está disponible para venta.");
+            JOptionPane.showMessageDialog(null, "Intento fallido: " + " El libro [" + bookTitle + "] no está disponible para venta.");
         }
         return ((step == 2 && bestSeller == null) || step == 4);
     }

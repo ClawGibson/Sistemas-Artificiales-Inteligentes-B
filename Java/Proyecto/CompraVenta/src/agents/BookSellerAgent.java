@@ -13,6 +13,7 @@ import jade.domain.DFService;
 import jade.domain.FIPAException;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
+import javax.swing.JOptionPane;
 
 public class BookSellerAgent extends Agent {
 
@@ -58,7 +59,7 @@ public class BookSellerAgent extends Agent {
 
         gui.dispose();
         String name = getLocalName();
-        in.mensajesResultados("Agente vendedor[" + name + "] finalizado");
+        JOptionPane.showMessageDialog(null, "Agente vendedor[" + name + "] finalizado");
     }
 
     public void updateCatalogue(final String title, final int price) {
@@ -67,7 +68,7 @@ public class BookSellerAgent extends Agent {
                 catalogue.put(title, price);
                 String titulo = title;
                 int precio = price;
-                in.mensajesLibros("Libro: [" + titulo + "] insertado con el precio de:  $" + precio);
+                JOptionPane.showMessageDialog(null, "Libro: [" + titulo + "] insertado con el precio de:  $" + precio);
             }
         });
     }

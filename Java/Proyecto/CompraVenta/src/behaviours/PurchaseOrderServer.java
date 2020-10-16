@@ -28,7 +28,6 @@ public class PurchaseOrderServer extends CyclicBehaviour {
             Integer price = (Integer) bsAgent.getCatalogue().remove(title);
             if (price != null) {
                 reply.setPerformative(ACLMessage.INFORM);
-                in.mensajesLibros("Libro: " + title + " vendido al agente [" + msg.getSender().getLocalName() + "]");
                 JOptionPane.showMessageDialog(null, "Libro: " + title + " vendido al agente [" + msg.getSender().getLocalName() + "]");
             } else {
                 reply.setPerformative(ACLMessage.FAILURE);
